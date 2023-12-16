@@ -10,7 +10,7 @@ import StateTesting
 
 struct ContentView: View {
     var body: some View {
-        WindowGroup {
+        VStack {
             SwiftUIView()
         }
     }

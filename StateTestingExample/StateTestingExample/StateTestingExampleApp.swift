@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
+import StateTesting
 
 @main
 struct StateTestingExampleApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            SwiftUIView()
         }
     }
 }

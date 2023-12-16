@@ -9,9 +9,10 @@ import Foundation
 import SwiftUI
 
 @available(iOS 13.0, *)
-struct SwiftUIView: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+public struct SwiftUIView: View {
+    public init() {}
+    public var body: some View {
+        Text("If you can see this, you're on the right track!")
     }
 }
 

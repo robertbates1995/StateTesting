@@ -11,6 +11,7 @@
 		7A6626282B2E1B7500F7FF29 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7A6626272B2E1B7500F7FF29 /* ContentView.swift */; };
 		7A66262A2B2E1B7600F7FF29 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A6626292B2E1B7600F7FF29 /* Assets.xcassets */; };
 		7A66262D2B2E1B7600F7FF29 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7A66262C2B2E1B7600F7FF29 /* Preview Assets.xcassets */; };
+		7A6626352B2E1E5F00F7FF29 /* StateTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 7A6626342B2E1E5F00F7FF29 /* StateTesting */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				7A6626352B2E1E5F00F7FF29 /* StateTesting in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +85,9 @@
 			dependencies = (
 			);
 			name = StateTestingExample;
+			packageProductDependencies = (
+				7A6626342B2E1E5F00F7FF29 /* StateTesting */,
+			);
 			productName = StateTestingExample;
 			productReference = 7A6626222B2E1B7500F7FF29 /* StateTestingExample.app */;
 			productType = "com.apple.product-type.application";
@@ -111,6 +116,9 @@
 				Base,
 			);
 			mainGroup = 7A6626192B2E1B7500F7FF29;
+			packageReferences = (
+				7A6626332B2E1E5F00F7FF29 /* XCRemoteSwiftPackageReference "StateTesting" */,
+			);
 			productRefGroup = 7A6626232B2E1B7500F7FF29 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -344,6 +352,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		7A6626332B2E1E5F00F7FF29 /* XCRemoteSwiftPackageReference "StateTesting" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/robertbates1995/StateTesting";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		7A6626342B2E1E5F00F7FF29 /* StateTesting */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 7A6626332B2E1E5F00F7FF29 /* XCRemoteSwiftPackageReference "StateTesting" */;
+			productName = StateTesting;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7A66261A2B2E1B7500F7FF29 /* Project object */;
 }

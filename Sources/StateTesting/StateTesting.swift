@@ -20,26 +20,26 @@ public struct Wrapper<T> {
     }
 }
 
-public func verify<State: Equatable>(given: ()->State,
-                              when: ()->(),
-                              then: (inout Wrapper<State>)->(),
-                              file: StaticString = #filePath,
-                              line: UInt = #line) {
-    var wrappedState = Wrapper<State>(given())
-    then(&wrappedState)
-    when()
-    let newState = given()
-    XCTAssertEqual(wrappedState.value, newState, file: file, line: line)
-}
-
-public func verify<State: Equatable>(given: ()->State,
-                              when: ()throws->(),
-                              then: (inout Wrapper<State>)->(),
-                              file: StaticString = #filePath,
-                              line: UInt = #line) throws {
-    var wrappedState = Wrapper<State>(given())
-    then(&wrappedState)
-    try when()
-    let newState = given()
-    XCTAssertEqual(wrappedState.value, newState, file: file, line: line)
+public struct Foo<State: Equatable> {
+    let savedFunction: ()->State
+    
+    public init(given: @escaping ()->State) {
+        savedFunction = given
+    }
+    
+    public func when(_ change: ()->(), _ then: (inout Wrapper<State>)->(), file: StaticString = #filePath, line: UInt = #line)->() {
+        var wrappedState = Wrapper<State>(savedFunction())
+        then(&wrappedState)
+        change()
+        let newState = savedFunction()
+        XCTAssertEqual(wrappedState.value, newState, file: file, line: line)
+    }
+    
+    public func when(_ change: ()throws->(), _ then: (inout Wrapper<State>)->(), file: StaticString = #filePath, line: UInt = #line)rethrows->() {
+        var wrappedState = Wrapper<State>(savedFunction())
+        then(&wrappedState)
+        try change()
+        let newState = savedFunction()
+        XCTAssertEqual(wrappedState.value, newState, file: file, line: line)
+    }
 }

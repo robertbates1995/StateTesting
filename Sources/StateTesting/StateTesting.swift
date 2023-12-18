@@ -3,14 +3,14 @@
 
 import CustomDump
 
-struct Wrapper<T> {
+public struct Wrapper<T> {
     private(set) var value: T
     
     init(_ value: T) {
         self.value = value
     }
     
-    mutating func change<D: Equatable>(_ path: WritableKeyPath<T, D>,
+    public mutating func change<D: Equatable>(_ path: WritableKeyPath<T, D>,
                                        _ newValue: D,
                                        file: StaticString = #filePath,
                                        line: UInt = #line) {
@@ -19,7 +19,7 @@ struct Wrapper<T> {
     }
 }
 
-func verify<State: Equatable>(given: ()->State,
+public func verify<State: Equatable>(given: ()->State,
                               when: ()->(),
                               then: (inout Wrapper<State>)->(),
                               file: StaticString = #filePath,
@@ -31,7 +31,7 @@ func verify<State: Equatable>(given: ()->State,
     XCTAssertEqual(wrappedState.value, newState, file: file, line: line)
 }
 
-func verify<State: Equatable>(given: ()->State,
+public func verify<State: Equatable>(given: ()->State,
                               when: ()throws->(),
                               then: (inout Wrapper<State>)->(),
                               file: StaticString = #filePath,

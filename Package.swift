@@ -30,6 +30,13 @@ let package = Package(
                 .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
             ]
         ),
+        .target(
+            name: "StateTestingExample",
+            dependencies: [
+                .product(name: "CustomDump", package: "swift-custom-dump"),
+                .product(name: "XCTestDynamicOverlay", package: "xctest-dynamic-overlay"),
+            ]
+        ),
         .testTarget(
             name: "StateTestingTests",
             dependencies: ["StateTesting"]),

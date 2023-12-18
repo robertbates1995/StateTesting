@@ -2,6 +2,7 @@
 // https://docs.swift.org/swift-book
 
 import CustomDump
+import XCTest
 
 public struct Wrapper<T> {
     private(set) var value: T

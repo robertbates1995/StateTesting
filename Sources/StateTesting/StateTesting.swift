@@ -21,25 +21,25 @@ public struct Wrapper<T> {
 }
 
 public struct Foo<State: Equatable> {
-    let savedFunction: ()->State
+    let stateCapture: ()->State
     
     public init(given: @escaping ()->State) {
-        savedFunction = given
+        stateCapture = given
     }
     
     public func when(_ change: ()->(), _ then: (inout Wrapper<State>)->(), file: StaticString = #filePath, line: UInt = #line)->() {
-        var wrappedState = Wrapper<State>(savedFunction())
+        var wrappedState = Wrapper<State>(stateCapture())
         then(&wrappedState)
         change()
-        let newState = savedFunction()
+        let newState = stateCapture()
         XCTAssertEqual(wrappedState.value, newState, file: file, line: line)
     }
     
     public func when(_ change: ()throws->(), _ then: (inout Wrapper<State>)->(), file: StaticString = #filePath, line: UInt = #line)rethrows->() {
-        var wrappedState = Wrapper<State>(savedFunction())
+        var wrappedState = Wrapper<State>(stateCapture())
         then(&wrappedState)
         try change()
-        let newState = savedFunction()
+        let newState = stateCapture()
         XCTAssertEqual(wrappedState.value, newState, file: file, line: line)
     }
 }

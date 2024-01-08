@@ -20,7 +20,7 @@ public struct Wrapper<T> {
     }
 }
 
-public struct Foo<State: Equatable> {
+public struct StateTester<State: Equatable> {
     let stateCapture: ()->State
     
     public init(given: @escaping ()->State) {

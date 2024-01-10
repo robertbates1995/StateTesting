@@ -32,7 +32,7 @@ public struct StateTester<State: Equatable> {
         then(&wrappedState)
         change()
         let newState = stateCapture()
-        XCTAssertEqual(wrappedState.value, newState, file: file, line: line)
+        XCTAssertNoDifference(wrappedState.value, newState, file: file, line: line)
     }
     
     public func when(_ change: ()throws->(), _ then: (inout Wrapper<State>)->(), file: StaticString = #filePath, line: UInt = #line)rethrows->() {
@@ -40,6 +40,6 @@ public struct StateTester<State: Equatable> {
         then(&wrappedState)
         try change()
         let newState = stateCapture()
-        XCTAssertEqual(wrappedState.value, newState, file: file, line: line)
+        XCTAssertNoDifference(wrappedState.value, newState, file: file, line: line)
     }
 }

@@ -15,8 +15,12 @@ public struct Wrapper<T> {
                                        _ newValue: D,
                                        file: StaticString = #filePath,
                                        line: UInt = #line) {
-        XCTAssertNotEqual(newValue, self.value[keyPath: path], file: file, line: line)
-        self.value[keyPath: path] = newValue
+        if newValue == self.value[keyPath: path] {
+            XCTFail("No change, new value same as original for \(path)", file: file, line: line)
+        } else {
+            //apply change
+            self.value[keyPath: path] = newValue
+        }
     }
 }
 
@@ -27,7 +31,7 @@ public struct StateTester<State: Equatable> {
         stateCapture = given
     }
     
-    public func when(_ change: ()->(), _ then: (inout Wrapper<State>)->(), file: StaticString = #filePath, line: UInt = #line)->() {
+    public func when(_ change: ()->(), then: (inout Wrapper<State>)->(), file: StaticString = #filePath, line: UInt = #line)->() {
         var wrappedState = Wrapper<State>(stateCapture())
         then(&wrappedState)
         change()
@@ -35,10 +39,26 @@ public struct StateTester<State: Equatable> {
         XCTAssertNoDifference(wrappedState.value, newState, file: file, line: line)
     }
     
-    public func when(_ change: ()throws->(), _ then: (inout Wrapper<State>)->(), file: StaticString = #filePath, line: UInt = #line)rethrows->() {
+    public func when(_ change: ()throws->(), then: (inout Wrapper<State>)->(), file: StaticString = #filePath, line: UInt = #line)rethrows->() {
         var wrappedState = Wrapper<State>(stateCapture())
         then(&wrappedState)
         try change()
+        let newState = stateCapture()
+        XCTAssertNoDifference(wrappedState.value, newState, file: file, line: line)
+    }
+    
+    public func when(_ change: ()async->(), then: (inout Wrapper<State>)->(), file: StaticString = #filePath, line: UInt = #line)async->() {
+        var wrappedState = Wrapper<State>(stateCapture())
+        then(&wrappedState)
+        await change()
+        let newState = stateCapture()
+        XCTAssertNoDifference(wrappedState.value, newState, file: file, line: line)
+    }
+    
+    public func when(_ change: ()async throws->(), then: (inout Wrapper<State>)->(), file: StaticString = #filePath, line: UInt = #line)async rethrows->() {
+        var wrappedState = Wrapper<State>(stateCapture())
+        then(&wrappedState)
+        try await change()
         let newState = stateCapture()
         XCTAssertNoDifference(wrappedState.value, newState, file: file, line: line)
     }
